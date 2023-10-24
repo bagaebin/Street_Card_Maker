@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>명함 커스터마이징 게임</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-color: #ffffff;
+    }
+    </style>
+    <style>
+      /* CSS를 사용하여 그림자 스타일 추가 */
+      #canvas-container {
+              position: relative;
+      perspective: 1000px; /* 시각적 깊이를 설정합니다. */
+        margin-bottom: 40px;
+        box-shadow: 10px 10px 40px rgba(0, 0, 0, 1);
+ /* 그림자 스타일 지정 */}
+    </style>
+    <style>
+            /* p5.js 캔버스와 입력 창 사이의 간격을 조절 */
+      #nameInput, #phoneInput, #changeColorButton, .phrase-buttons {
+        margin-top: 10px; /* 간격을 조절할 값 설정 */
+      }
+    </style>
+        <style>
+           .phrase-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+              </style>
+            <style>
+                 .phrase-buttons button {
+      margin-right: 10px; /* 버튼 사이의 간격을 조절할 값 설정 */
+    }
+              
+              </style>
+      <style>
+        /* 입력창과 버튼을 가로로 배치하는 스타일 */
+    .input-container {
+      display: flex;
+      flex-direction: row;
+    }
+        </style>
+     <style>
+    .input-container input, .input-container button {
+      margin-right: 10px; /* 입력창과 버튼 사이의 간격을 조절할 값 설정 */
+    }
+        </style>
+  </head>
+  <body
+    style="background-color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0;"
+  >
+    <div id="canvas-container">
+      <!-- p5.js 캔버스를 여기에 그립니다. -->
+    </div>
+
+  <!-- 입력창과 버튼을 가로로 배치하는 컨테이너 -->
+  <div class="input-container">
+    <!-- 사용자 이름을 입력할 Input 요소 -->
+    <input type="text" id="nameInput" placeholder="이름을 입력하세요" oninput="updateUserName(this.value)">
+  
+    <!-- 사용자 전화번호를 입력할 Input 요소 -->
+    <input type="text" id="phoneInput" placeholder="전화번호를 입력하세요" oninput="updateUserPhoneNumber(this.value)">
+  
+    <!-- '색 바꾸기' 버튼 -->
+    <button id="changeColorButton" onclick="changeColors()">색 바꾸기</button>
+  </div>
+
+    <!-- 문구 선택 버튼들 -->
+  <div class="phrase-buttons">
+    <button id="phrase1" onclick="togglePhrase('신속과제')">신속과제</button>
+    <button id="phrase2" onclick="togglePhrase('즉석과제')">즉석과제</button>
+    <button id="phrase3" onclick="togglePhrase('자체휴강')">자체휴강</button>
+        <button id="phrase4" onclick="togglePhrase('사랑보장')">사랑보장</button>
+    <!-- 원하는 문구 버튼들을 추가하세요 -->
+  </div>
+      <div class="phrase-buttons">
+    <button id="phrase1" onclick="togglePhrase('만수무강')">만수무강</button>
+    <button id="phrase2" onclick="togglePhrase('무병장수')">무병장수</button>
+    <button id="phrase3" onclick="togglePhrase('행복보장')">행복보장</button>
+                <button id="phrase4" onclick="togglePhrase('절대달성')">절대달성</button>
+    <!-- 원하는 문구 버튼들을 추가하세요 -->
+  </div>
+
+
+    <script src="sketch.js"></script>
+    <!-- sketch.js 스크립트를 가장 하단에 추가 -->
+    <script>
+    // Device Orientation API를 활용하여 기울기 감지
+    window.addEventListener("deviceorientation", (event) => {
+      // X 및 Y 각도에서 요소 회전값 계산
+      const xRotation = event.beta; // X 축 회전
+      const yRotation = event.gamma; // Y 축 회전
+
+      // p5.js 캔버스 요소 선택
+      const canvas = select('#defaultCanvas0');
+
+      // 요소 회전 적용
+      canvas.style('transform', `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`);
+    });
+  </script>
+  </body>
+</html>
