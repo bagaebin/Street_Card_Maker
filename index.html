@@ -1,110 +1,165 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>명함 커스터마이징 게임</title>
+    <title>일수명함 제조기</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <style>
-        body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      background-color: #ffffff;
-    }
+          body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        background-color: #ffffff;
+      }
     </style>
     <style>
-      /* CSS를 사용하여 그림자 스타일 추가 */
-      #canvas-container {
-              position: relative;
-      perspective: 1000px; /* 시각적 깊이를 설정합니다. */
-        margin-bottom: 40px;
-        box-shadow: 10px 10px 40px rgba(0, 0, 0, 1);
- /* 그림자 스타일 지정 */}
+           /* CSS를 사용하여 그림자 스타일 추가 */
+           #canvas-container {
+                   position: relative;
+           perspective: 1000px; /* 시각적 깊이를 설정합니다. */
+             margin-bottom: 40px;
+             box-shadow: 10px 10px 40px rgba(0, 0, 0, 1);
+      /* 그림자 스타일 지정 */}
     </style>
     <style>
             /* p5.js 캔버스와 입력 창 사이의 간격을 조절 */
-      #nameInput, #phoneInput, #changeColorButton, .phrase-buttons {
+      #nameInput, #phoneInput, #changeColorButton, .phrase-buttons, #saveButton {
         margin-top: 10px; /* 간격을 조절할 값 설정 */
       }
+        #nameInput, #phoneInput   {
+    width: 125px; /* 버튼의 너비를 조절합니다. */
+    height: 25px; /* 버튼의 높이를 조절합니다. */
+    font-size: 12px; /* 버튼 텍스트의 글꼴 크기를 조절합니다. */
+    /* 다른 스타일 속성을 추가하면 더 많은 스타일을 적용할 수 있습니다. */
+  }
+  /* 버튼 스타일 수정 */
+  #saveButton   {
+    width: 180px; /* 버튼의 너비를 조절합니다. */
+    height: 30px; /* 버튼의 높이를 조절합니다. */
+    font-size: 12px; /* 버튼 텍스트의 글꼴 크기를 조절합니다. */
+    /* 다른 스타일 속성을 추가하면 더 많은 스타일을 적용할 수 있습니다. */
+  }
+        #changeColorButton, #phrase1, #phrase2, #phrase3, #phrase4, #phrase5, #phrase6, #phrase7, #phrase8  {
+    width: 85px; /* 버튼의 너비를 조절합니다. */
+    height: 30px; /* 버튼의 높이를 조절합니다. */
+    font-size: 12px; /* 버튼 텍스트의 글꼴 크기를 조절합니다. */
+    /* 다른 스타일 속성을 추가하면 더 많은 스타일을 적용할 수 있습니다. */
+  }
+             .phrase-buttons {
+        display: flex;
+        flex-direction: row;
+      }
+                   .phrase-buttons button {
+        margin-right: 10px; /* 버튼 사이의 간격을 조절할 값 설정 */
+      }
+          /* 입력창과 버튼을 가로로 배치하는 스타일 */
+      .input-container {
+        display: flex;
+        flex-direction: row;
+      }
+      .input-container input, .input-container button {
+        margin-right: 10px; /* 입력창과 버튼 사이의 간격을 조절할 값 설정 */
+      }
     </style>
-        <style>
-           .phrase-buttons {
-      display: flex;
-      flex-direction: row;
-    }
-              </style>
-            <style>
-                 .phrase-buttons button {
-      margin-right: 10px; /* 버튼 사이의 간격을 조절할 값 설정 */
-    }
-              
-              </style>
       <style>
-        /* 입력창과 버튼을 가로로 배치하는 스타일 */
-    .input-container {
-      display: flex;
-      flex-direction: row;
-    }
-        </style>
-     <style>
-    .input-container input, .input-container button {
-      margin-right: 10px; /* 입력창과 버튼 사이의 간격을 조절할 값 설정 */
-    }
-        </style>
+      /* 오디오 플레이어 숨김 */
+      audio {
+        display: none;
+      }
+    </style>
+    
   </head>
   <body
     style="background-color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0;"
   >
+      <h1>일수명함 제조기</h1>
     <div id="canvas-container">
       <!-- p5.js 캔버스를 여기에 그립니다. -->
     </div>
 
-  <!-- 입력창과 버튼을 가로로 배치하는 컨테이너 -->
-  <div class="input-container">
-    <!-- 사용자 이름을 입력할 Input 요소 -->
-    <input type="text" id="nameInput" placeholder="이름을 입력하세요" oninput="updateUserName(this.value)">
-  
-    <!-- 사용자 전화번호를 입력할 Input 요소 -->
-    <input type="text" id="phoneInput" placeholder="전화번호를 입력하세요" oninput="updateUserPhoneNumber(this.value)">
-  
-    <!-- '색 바꾸기' 버튼 -->
-    <button id="changeColorButton" onclick="changeColors()">색 바꾸기</button>
-  </div>
+    <!-- 입력창과 버튼을 가로로 배치하는 컨테이너 -->
+    <div class="input-container">
+      <!-- 사용자 이름을 입력할 Input 요소 -->
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="이름을 입력하세요"
+        oninput="updateUserName(this.value)"
+      />
+
+      <!-- 사용자 전화번호를 입력할 Input 요소 -->
+      <input
+        type="text"
+        id="phoneInput"
+        placeholder="전화번호를 입력하세요"
+        oninput="updateUserPhoneNumber(this.value)"
+      />
+
+      <!-- '색 바꾸기' 버튼 -->
+      <button id="changeColorButton" onclick="changeColors()">색 바꾸기</button>
+    </div>
 
     <!-- 문구 선택 버튼들 -->
-  <div class="phrase-buttons">
-    <button id="phrase1" onclick="togglePhrase('신속과제')">신속과제</button>
-    <button id="phrase2" onclick="togglePhrase('즉석과제')">즉석과제</button>
-    <button id="phrase3" onclick="togglePhrase('자체휴강')">자체휴강</button>
-        <button id="phrase4" onclick="togglePhrase('사랑보장')">사랑보장</button>
-    <!-- 원하는 문구 버튼들을 추가하세요 -->
-  </div>
-      <div class="phrase-buttons">
-    <button id="phrase1" onclick="togglePhrase('만수무강')">만수무강</button>
-    <button id="phrase2" onclick="togglePhrase('무병장수')">무병장수</button>
-    <button id="phrase3" onclick="togglePhrase('행복보장')">행복보장</button>
-                <button id="phrase4" onclick="togglePhrase('절대달성')">절대달성</button>
-    <!-- 원하는 문구 버튼들을 추가하세요 -->
-  </div>
+    <div class="phrase-buttons">
+      <button id="phrase1" onclick="togglePhrase('▣신속과제')">신속과제</button>
+      <button id="phrase2" onclick="togglePhrase('▣즉석과제')">즉석과제</button>
+      <button id="phrase3" onclick="togglePhrase('▣자체휴강')">자체휴강</button>
+      <button id="phrase4" onclick="togglePhrase('▣사랑보장')">사랑보장</button>
+      <!-- 원하는 문구 버튼들을 추가하세요 -->
+    </div>
+    <div class="phrase-buttons">
+      <button id="phrase5" onclick="togglePhrase('▣만수무강')">만수무강</button>
+      <button id="phrase6" onclick="togglePhrase('▣무병장수')">무병장수</button>
+      <button id="phrase7" onclick="togglePhrase('▣행복보장')">행복보장</button>
+      <button id="phrase8" onclick="togglePhrase('▣절대달성')">절대달성</button>
+      <!-- 원하는 문구 버튼들을 추가하세요 -->
+    </div>
 
+        <div class="phrase-buttons">
+    <button id="saveButton">저장하기</button>
+    <button id="saveButton" onclick="saveCanvasAsImage()">아이폰에서 저장하기</button>
+        </div>
+           <audio loop autoplay>
+      <!-- "controls" 속성은 오디오 플레이어 컨트롤을 표시합니다. -->
+      <!-- "loop" 속성은 음악을 반복 재생합니다. -->
+      <source src="Street_Sound.mp3" type="audio/mpeg">
+      <!-- "src" 속성에는 음악 파일의 경로를 지정합니다. -->
+      <!-- "type" 속성에는 음악 파일 형식을 지정합니다. -->
+      <!-- 여러 형식의 음악 파일을 지원하도록 여러 <source> 태그를 추가할 수 있습니다. -->
+    </audio>
 
     <script src="sketch.js"></script>
     <!-- sketch.js 스크립트를 가장 하단에 추가 -->
     <script>
-    // Device Orientation API를 활용하여 기울기 감지
-    window.addEventListener("deviceorientation", (event) => {
-      // X 및 Y 각도에서 요소 회전값 계산
-      const xRotation = event.beta; // X 축 회전
-      const yRotation = event.gamma; // Y 축 회전
+      // '저장하기' 버튼 클릭 시 이미지 저장
+      document.getElementById("saveButton").addEventListener("click", () => {
+        // 이미지 저장 권한 요청
+        if (navigator.permissions && navigator.permissions.query) {
+          navigator.permissions
+            .query({ name: "camera" })
+            .then((result) => {
+              if (result.state === "granted" || result.state === "prompt") {
+                // 이미지 저장 권한이 허용되면 캔버스 저장
+                saveCanvas(canvas, "명함", "png");
+              }
+            });
+        }
+      });
 
-      // p5.js 캔버스 요소 선택
-      const canvas = select('#defaultCanvas0');
+      // Device Orientation API를 활용하여 기울기 감지
+      window.addEventListener("deviceorientation", (event) => {
+        // X 및 Y 각도에서 요소 회전값 계산
+        const xRotation = event.beta; // X 축 회전
+        const yRotation = event.gamma; // Y 축 회전
 
-      // 요소 회전 적용
-      canvas.style('transform', `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`);
-    });
-  </script>
+        // p5.js 캔버스 요소 선택
+        const canvas = select("#defaultCanvas0");
+
+        // 요소 회전 적용
+        canvas.style("transform", `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`);
+      });
+    </script>
   </body>
 </html>

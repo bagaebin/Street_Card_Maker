@@ -18,6 +18,8 @@ let phoneColors = ["#FFD500", "#FFD500", "#FFD500", "#ff0000", "#0000ff"]; // �
 let colorIndex = 0; // 현재 색 조합 인덱스
 
 function setup() {
+  
+  
   let canvas = createCanvas(450, 275);
   canvas.parent("canvas-container"); // 캔버스를 'canv50tainer' 요소 내에 그립니다.
   updateColors();
@@ -36,12 +38,12 @@ function draw() {
   // 사용자 이름 길이에 따라 가운데 정렬 또는 좌우 양끝에 맞춘 정렬
   if (userName.length === 1) {
     textAlign(CENTER);
-    text(userName, width / 2+5, 120+5);
+    text(userName, width / 2+5, 125+5);
   } else {
     let leftSpacing = (400 - textWidth(userName)) / (userName.length - 1);
     let x = 70;
     for (let i = 0; i < userName.length; i++) {
-      text(userName[i], x+5, 120+5);
+      text(userName[i], x+5, 125+5);
       x += textWidth(userName[i]) + leftSpacing;
     }
   }
@@ -51,12 +53,12 @@ function draw() {
   // 사용자 이름 길이에 따라 가운데 정렬 또는 좌우 양끝에 맞춘 정렬
   if (userName.length === 1) {
     textAlign(CENTER);
-    text(userName, width / 2, 120);
+    text(userName, width / 2, 125);
   } else {
     let leftSpacing = (400 - textWidth(userName)) / (userName.length - 1);
     let x = 70;
     for (let i = 0; i < userName.length; i++) {
-      text(userName[i], x, 120);
+      text(userName[i], x, 125);
       x += textWidth(userName[i]) + leftSpacing;
     }
   }
@@ -66,7 +68,7 @@ function draw() {
   // 사용자 전화번호
   if (userPhoneNumber.length === 1) {
     textAlign(CENTER);
-    text(userPhoneNumber, width / 2+5, 200+5);
+    text(userPhoneNumber, width / 2+3, 200+3);
   } else {
     let leftSpacing =
       (390 - textWidth(userPhoneNumber)) / (userPhoneNumber.length - 1);
@@ -97,14 +99,14 @@ function draw() {
     textSize(24);
   if (selectedPhrases.length === 1) {
     textAlign(CENTER);
-    text(selectedPhrases[0], width / 2, 250);
+    text(selectedPhrases[0], width / 2, 240);
   } else {
     // 명함 좌우 양끝에 맞추어 배분 정렬
-    let startX = 80;
+    let startX = 75;
     let endX = 380;
     let interval = (endX - startX) / (selectedPhrases.length - 1);
     for (let i = 0; i < selectedPhrases.length; i++) {
-      text(selectedPhrases[i], startX + i * interval, 250);
+      text(selectedPhrases[i], startX + i * interval, 240);
     }
   }
 }
@@ -152,7 +154,22 @@ function changeColors() {
   updateColors();
 }
 
-function generateResultImage() {
-  // 결과물 이미지를 생성하고 다운로드 받을 수 있는 기능을 추가할 수 있음
-  // 예: createImage(width, height).save('result.png');
+function saveCanvasAsImage() {
+  let canvas = document.getElementById('defaultCanvas0'); // p5.js 캔버스 요소를 가져옵니다.
+  
+  // 캔버스를 이미지 데이터 URL로 변환합니다.
+  let imageDataURL = canvas.toDataURL('image/png');
+
+  // 이미지 데이터 URL을 이용해 다운로드 링크를 생성합니다.
+  let a = document.createElement('a');
+  a.href = imageDataURL;
+  a.download = 'my_canvas_image.png'; // 다운로드될 파일 이름을 설정합니다.
+  a.style.display = 'none';
+
+  // 링크를 DOM에 추가하고 클릭하여 다운로드를 시작합니다.
+  document.body.appendChild(a);
+  a.click();
+
+  // DOM에서 링크를 제거합니다.
+  document.body.removeChild(a);
 }
